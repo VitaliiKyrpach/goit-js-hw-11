@@ -97,22 +97,6 @@ a:hover,
 a:focus {
   transform: translateY(-10px) scale(1.04);
 }
-
-/* .load-more {
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  height: 40px;
-  width: 120px;
-  color: #fff;
-  background: transparent;
-  border-left: 1px solid #fff;
-  border-radius: 0 3px 3px 0;
-}
-
-.load-more:focus {
-  outline: 0;
-} */
 .load-more {
   display: block;
   margin: 25px auto;
@@ -125,6 +109,7 @@ a:focus {
 .load-more:hover {
   background: #444;
   color: #fff;
+  cursor: pointer;
 }
 .load-more:active {
   box-shadow: 0px 0px 12px 0px rgb(26, 12, 12);

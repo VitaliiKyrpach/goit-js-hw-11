@@ -18,12 +18,13 @@ showMore.addEventListener('click', addPage);
 showMore.classList.add('is-hidden');
 
 function onSearch(evt) {
+  currentPage = 1;
   showMore.classList.add('is-hidden');
   gallery.innerHTML = '';
   evt.preventDefault();
   const search = evt.target.firstElementChild.value.trim();
   if (!search) return;
-  getPhotos(search)
+  getPhotos(search, currentPage)
     .then(response => {
       if (!response.data.hits.length) {
         Notify.failure(
@@ -36,23 +37,19 @@ function onSearch(evt) {
       } else {
         showMore.classList.remove('is-hidden');
       }
-      if (queryCount > 0) {
+      if (queryCount > 0 && response.data.hits.length) {
         Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
       }
       gallery.insertAdjacentHTML('beforeend', createMarkUp(response.data));
       lightbox.refresh();
       queryCount += 1;
-      // const { height: cardHeight } = document
-      //   .querySelector('.gallery')
-      //   .firstElementChild.getBoundingClientRect();
-      // console.log(cardHeight);
     })
     .catch(error => {
       console.log(error);
     });
 }
 
-function getPhotos(search, pageNum = 1) {
+function getPhotos(search, pageNum) {
   return axios.get(`${BASE_URL}`, {
     params: {
       key: API_KEY,
@@ -119,6 +116,13 @@ function addPage() {
           "We're sorry, but you've reached the end of search results."
         );
       }
+      const { height: cardHeight } = document
+        .querySelector('.gallery')
+        .firstElementChild.getBoundingClientRect();
+      window.scrollBy({
+        top: cardHeight * 2.7,
+        behavior: 'smooth',
+      });
     })
     .catch(error => {
       console.log(error);
